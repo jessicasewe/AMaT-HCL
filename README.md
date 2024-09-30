@@ -29,3 +29,11 @@ To clone repo
 <p>6. npm install</p>
 
 <p>7. npm start</p>
+
+<h2>🍰 Contribution Guidelines:</h2>
+
+<h2>Team Members: </h2>
+<h3>Stennis Smith: stennismith@gmail.com</h3> 
+<h3>ABDULLAH ADESINA DHIKRULLAH: dhikrullahadesina1@gmail.com</h3> 
+<h3>Jessica Guriyire: jessicasewe89@gmail.com</h3> 
+<h3>Richard Senyo Gadasu: senyo197@gmail.com</h3>

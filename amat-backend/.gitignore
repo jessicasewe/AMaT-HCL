@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Build output
+dist/
+build/
+
+# Secrets and sensitive files
+secrets/
+*.secret
+
+# Node REPL history
+.node_repl_history
+
+# TypeScript build info
+*.tsbuildinfo

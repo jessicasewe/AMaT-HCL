@@ -4,7 +4,7 @@ import doctorImage from "../_assets/doctor.png";
 import doctorImage2 from "../_assets/doctor2.png";
 import doctorImage3 from "../_assets/doctor3.png";
 import medicalPattern from "../_assets/medical.jpg";
-import Carousel from "./Carousel"; // Import the custom Carousel component
+import Carousel from "./Carousel";
 
 export default function HeroCard() {
   return (

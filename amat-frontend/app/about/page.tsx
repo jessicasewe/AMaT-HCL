@@ -63,8 +63,6 @@ export default function About() {
           </p>
         </div>
       </div>
-
-      {/* New Centered Text Section After the Mission */}
       <div className="flex justify-center mt-10 mb-10">
         <div className="text-center">
           <h2 className="text-blue-900 text-3xl font-semibold mb-4">

@@ -34,7 +34,7 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="flex items-center space-x-6">
-        <Link href="/login">
+        <Link href="/auth/login">
           <span className="text-blue-900 font-sans font-semibold">Log In</span>
         </Link>
         <Link href="/signup">

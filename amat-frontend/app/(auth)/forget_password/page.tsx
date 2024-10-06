@@ -1,10 +1,14 @@
 import Link from "next/link";
-//import { FaEnvelope } from "react-icons/fa";
+import Image from "next/image";
+import logo from "../../_assets/logo.png";
 
 export default function Forget_password () {
     return (
-        <div className="mt-32 flex justify-center">
-            <div className="w-2/3">
+        <div className="mt-32 mb-32 flex justify-center text-blue-900">
+            <div className="w-96">
+                <div className='flex justify-center'>
+                    <Image src={logo} alt='AMaT-HCL' className='w-24 mb-9'/>
+                </div>
                 <div className="mb-9 text-center">
                     <div className="font-extrabold text-2xl mb-2">Password Reset</div>
                     <div>Enter email address to reset password</div>
@@ -13,8 +17,8 @@ export default function Forget_password () {
                     <label>Email Address</label><br/>
                     <input type="email" placeholder="Enter your email address" name="email" className="border-solid border-2 rounded-md w-full mb-3 p-1"/><br/>
                 </form>
-                <div className="flex justify-center pb-32">
-                    <button type="submit" form="Forget_password" value="Submit" className=" text-white p-1 rounded-xl pr-5 pl-5" style={{backgroundColor: "orange"}}>Reset Password</button>
+                <div className="flex justify-center pb-24">
+                    <button type="submit" form="Forget_password" value="Submit" className=" text-white p-1 rounded-lg w-full bg-blue-900">Reset Password</button>
                 </div>
                 <div className="flex justify-center mb-14">Have an account? <Link href="/login" className="pl-1 text-red-600"> Sign In</Link></div>
             </div> 

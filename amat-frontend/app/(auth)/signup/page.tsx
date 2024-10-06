@@ -1,10 +1,15 @@
+import logo from '../../_assets/logo.png';
+import Image from 'next/image';
 export default function Signup () {
     return (
-        <div className="mt-32 flex justify-center">
-            <div className="lg:w-3/5 md:w-1/2 sm:w-2/3">
-                <div className="mb-9 text-center">
-                    <div className="font-extrabold text-4xl">Create Account</div>
-                    <div>Let&apos;s get you started. Please enter your details</div>
+        <div className="mt-32 mb-32 flex justify-center text-blue-900">
+            <div className="w-96">
+                <div className='flex justify-center'>
+                    <Image src={logo} alt='AMaT-HCL' className='w-24 mb-9'/>
+                </div>
+                <div className="mb-14 text-center">
+                    <div className="font-extrabold text-2xl">Create Account</div>
+                    <div className='text-sm'>Let&apos;s get you started. Please enter your details</div>
                 </div>
                 <form action='#' name="sign_up" className="pb-3">
                     <label>Full Name</label><br/>
@@ -19,7 +24,7 @@ export default function Signup () {
                     <input type="password" placeholder="*************" name="confirmPassward" className="border-solid border-2 rounded-md w-full mb-3 p-1"/><br/>
                 </form>
                 <div className="flex justify-center">
-                    <button type="submit" form="sign_up" value="Submit" className="bg-blue-700 text-white p-1 rounded-xl pr-5 pl-5">Continue</button>
+                    <button type="submit" form="sign_up" value="Submit" className="bg-blue-900 text-white p-1 rounded-xl w-full">Continue</button>
                 </div>
             </div>
             

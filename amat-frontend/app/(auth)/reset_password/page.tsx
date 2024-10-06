@@ -1,8 +1,7 @@
-import Link from "next/link";
 import Image from "next/image";
-import logo from "../../_assets/logo.png";
-
-export default function Forget_password () {
+import Link from "next/link";
+import logo from '../../_assets/logo.png';
+export default function Reset_password () {
     return (
         <div className="mt-32 mb-32 flex justify-center text-blue-900">
             <div className="w-96">
@@ -14,11 +13,13 @@ export default function Forget_password () {
                     <div>Enter email address to reset password</div>
                 </div>
                 <form action='#' name="Forget_password" className="pb-10">
-                    <label>Email Address</label><br/>
-                    <input id="email" autoComplete="email" required type="email" placeholder="Enter your email address" name="email" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
+                    <label>Enter New Password</label><br/>
+                    <input type="email" placeholder="***********" name="email" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
+                    <label>Confirm New Password</label><br/>
+                    <input type="email" placeholder="***********" name="email" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
                 </form>
                 <div className="flex justify-center pb-24">
-                    <button type="submit" form="Forget_password" value="Submit" className=" text-white p-1 rounded-lg w-full bg-blue-900">Reset Password</button>
+                    <button type="submit" form="Forget_password" value="Submit" className=" text-white p-1 rounded-lg w-full bg-blue-900">Change Password</button>
                 </div>
                 <div className="flex justify-center mb-14 text-gray-500">Have an account? <Link href="/login" className="pl-1 text-blue-900 font-bold"> Sign In</Link></div>
             </div> 

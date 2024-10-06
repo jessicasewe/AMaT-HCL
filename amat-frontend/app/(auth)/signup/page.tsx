@@ -13,15 +13,15 @@ export default function Signup () {
                 </div>
                 <form action='#' name="sign_up" className="pb-3">
                     <label>Full Name</label><br/>
-                    <input type="text" placeholder="Enter your full name" name="name" className="border-solid border-2 rounded-md w-full mb-3 p-1"/><br/>
+                    <input id="name"  required type="text" placeholder="Enter your full name" name="name" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
                     <label>Email Address</label><br/>
-                    <input type="email" placeholder="Enter your email address" name="email" className="border-solid border-2 rounded-md w-full mb-3 p-1"/><br/>
+                    <input id="email"  required type="email" placeholder="Enter your email address" name="email" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
                     <label>Phone Number</label><br/>
-                    <input type="tel" name="phone" className="border-solid border-2 rounded-md w-full mb-3 p-1"/><br/>
+                    <input id="phone"  required type="tel" name="phone" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
                     <label>Enter Password</label><br/>
-                    <input type="password" placeholder="*************" name="password" className="border-solid border-2 rounded-md w-full mb-3 p-1"/><br/>
+                    <input id="password"  required type="password" placeholder="*************" name="password" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
                     <label>Confirm Password</label><br/>
-                    <input type="password" placeholder="*************" name="confirmPassward" className="border-solid border-2 rounded-md w-full mb-3 p-1"/><br/>
+                    <input id="confirm_password"  required type="password" placeholder="*************" name="confirm_passward" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
                 </form>
                 <div className="flex justify-center">
                     <button type="submit" form="sign_up" value="Submit" className="bg-blue-900 text-white p-1 rounded-xl w-full">Continue</button>

@@ -14,9 +14,9 @@ export default function Reset_password () {
                 </div>
                 <form action='#' name="Forget_password" className="pb-10">
                     <label>Enter New Password</label><br/>
-                    <input type="email" placeholder="***********" name="email" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
+                    <input id="reset_password" required type="password" placeholder="***********" name="reset_password" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
                     <label>Confirm New Password</label><br/>
-                    <input type="email" placeholder="***********" name="email" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
+                    <input id="confirm_reset_password" required type="password" placeholder="***********" name="confirm_reset_password" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
                 </form>
                 <div className="flex justify-center pb-24">
                     <button type="submit" form="Forget_password" value="Submit" className=" text-white p-1 rounded-lg w-full bg-blue-900">Change Password</button>

@@ -13,15 +13,15 @@ export default function Signup () {
                 </div>
                 <form action='#' name="sign_up" className="pb-3">
                     <label>Full Name</label><br/>
-                    <input id="name"  required type="text" placeholder="Enter your full name" name="name" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
+                    <input id="name"  required type="text" placeholder="Enter your full name" name="name" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black  text-sm"/><br/>
                     <label>Email Address</label><br/>
-                    <input id="email"  required type="email" placeholder="Enter your email address" name="email" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
+                    <input id="email"  required type="email" placeholder="Enter your email address" name="email" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black text-sm"/><br/>
                     <label>Phone Number</label><br/>
-                    <input id="phone"  required type="tel" name="phone" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
+                    <input id="phone"  required type="tel" name="phone" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black text-sm"/><br/>
                     <label>Enter Password</label><br/>
-                    <input id="password"  required type="password" placeholder="*************" name="password" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
+                    <input id="password"  required type="password" placeholder="*************" name="password" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black text-sm"/><br/>
                     <label>Confirm Password</label><br/>
-                    <input id="confirm_password"  required type="password" placeholder="*************" name="confirm_passward" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
+                    <input id="confirm_password"  required type="password" placeholder="*************" name="confirm_passward" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black text-sm"/><br/>
                 </form>
                 <div className="flex justify-center">
                     <button type="submit" form="sign_up" value="Submit" className="bg-blue-900 text-white p-1 rounded-xl w-full">Continue</button>
@@ -29,5 +29,5 @@ export default function Signup () {
             </div>
             
         </div>
-    )
+    );
 }

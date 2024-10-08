@@ -1,25 +1,19 @@
+"use client";
 import "./globals.css";
 import Navbar from "./_components/Navbar";
-import { Roboto } from "next/font/google";
-import HeroCard from "./_components/HeroCard";
-import ServiceCards from "./_components/ServiceCards";
-
-export const metadata = {
-  title: "Amat Frontend",
-};
-const roboto = Roboto({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-});
+import Footer from "./_components/Footer";
+import { usePathname } from "next/navigation";
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
+  const pathname = usePathname();
+  console.log(children);
+
   return (
     <html lang="en">
       <body className="bg-white">
         <Navbar />
-        <HeroCard />
-        <ServiceCards />
         {children}
+        {pathname !== "/auth/login" && pathname !== "/auth/signup" && pathname !== "/auth/forget_password" && pathname !== "/auth/reset_password" && pathname !== "/auth/signup" && <Footer />}
       </body>
     </html>
   );

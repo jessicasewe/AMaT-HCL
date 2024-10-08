@@ -11,7 +11,7 @@ export default function Password_updated () {
                 <div className="font-serif">Your password has been changed successfully</div>
                 <div className="font-serif">Use your new password to <Link href="/login" className="text-blue-900">Sign In</Link> </div>
                 <div className="mt-9">
-                    <Link href="/login" className="bg-green-500 rounded-xl p-2 pr-8 pl-8">Sign In</Link>
+                    <Link href="/auth/login" className="bg-green-500 rounded-xl p-2 pr-8 pl-8">Sign In</Link>
                 </div>
             </div>
         </div>

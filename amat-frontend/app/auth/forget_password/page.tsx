@@ -13,9 +13,9 @@ export default function Forget_password () {
                     <div className="font-extrabold text-2xl mb-2">Password Reset</div>
                     <div>Enter email address to reset password</div>
                 </div>
-                <form action='#' name="Forget_password" className="pb-10">
+                <form action='#' id="Forget_password" className="pb-10">
                     <label>Email Address</label><br/>
-                    <input id="email" autoComplete="email" required type="email" placeholder="Enter your email address" name="email" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black"/><br/>
+                    <input id="email" autoComplete="email" required type="email" placeholder="Enter your email address" name="email" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black text-sm"/><br/>
                 </form>
                 <div className="flex justify-center pb-24">
                     <button type="submit" form="Forget_password" value="Submit" className=" text-white p-1 rounded-lg w-full bg-blue-900">Reset Password</button>

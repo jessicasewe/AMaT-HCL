@@ -1,5 +1,6 @@
 import logo from '../../_assets/logo.png';
 import Image from 'next/image';
+import Link from 'next/link';
 export default function Signup () {
     return (
         <div className="mt-32 mb-32 flex justify-center text-blue-900">
@@ -11,7 +12,7 @@ export default function Signup () {
                     <div className="font-extrabold text-2xl">Create Account</div>
                     <div className='text-sm'>Let&apos;s get you started. Please enter your details</div>
                 </div>
-                <form action='#' name="sign_up" className="pb-3">
+                <form action='/auth/login' id="sign_up">
                     <label>Full Name</label><br/>
                     <input id="name"  required type="text" placeholder="Enter your full name" name="name" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black  text-sm"/><br/>
                     <label>Email Address</label><br/>
@@ -23,11 +24,13 @@ export default function Signup () {
                     <label>Confirm Password</label><br/>
                     <input id="confirm_password"  required type="password" placeholder="*************" name="confirm_passward" className="border-solid border-2 rounded-md w-full mb-3 p-1 text-black text-sm"/><br/>
                 </form>
-                <div className="flex justify-center">
+                <div className="flex justify-center mt-11">
                     <button type="submit" form="sign_up" value="Submit" className="bg-blue-900 text-white p-1 rounded-xl w-full">Continue</button>
                 </div>
+                <div className='flex justify-center mt-20'>
+                    <p className='text-gray-500'>Have an account already? <Link href="/auth/login" className='text-blue-900 font-bold'>Sign In</Link></p>
+                </div>
             </div>
-            
         </div>
     );
 }

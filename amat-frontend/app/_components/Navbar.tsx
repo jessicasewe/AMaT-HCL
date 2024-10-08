@@ -34,10 +34,10 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="flex items-center space-x-6">
-        <Link href="/login">
+        <Link href="/auth/login">
           <span className="text-blue-900 font-sans font-semibold">Log In</span>
         </Link>
-        <Link href="/signup">
+        <Link href="/auth/signup">
           <span className="text-black font-sans border border-blue-300 px-4 py-2 rounded-full hover:bg-blue-300 hover:text-white transition-colors font-semibold">
             Sign Up
           </span>

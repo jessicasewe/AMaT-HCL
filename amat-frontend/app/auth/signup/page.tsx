@@ -79,15 +79,6 @@ export default function Signup() {
             Continue
           </button>
         </div>
-        <p className="mt-10 text-center text-sm text-gray-500">
-          Already have an account?
-          <a
-            href="/login"
-            className="font-semibold leading-6 text-blue-900 hover:text-blue-500"
-          >
-            Log In Now!
-          </a>
-        </p>
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className="bg-white">
         <Navbar />
         {children}
-        {pathname !== "/auth/login" && <Footer />}
+        {pathname !== "/auth/login" && pathname !== "/auth/signup" && pathname !== "/auth/forget_password" && pathname !== "/auth/reset_password" && pathname !== "/auth/signup" && <Footer />}
       </body>
     </html>
   );

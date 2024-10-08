@@ -6,7 +6,6 @@ export default function Login() {
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-40 lg:px-8">
       {" "}
-      {/* Adjusted py-20 */}
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Image
           className="mx-auto w-auto mb-3"
@@ -72,7 +71,7 @@ export default function Login() {
         <p className="mt-10 text-center text-sm text-gray-500">
           Don't have an account?
           <a
-            href="#"
+            href="/signup"
             className="font-semibold leading-6 text-blue-900 hover:text-blue-500"
           >
             Sign Up Now!

@@ -1,4 +1,3 @@
-// app/about/page.tsx
 import BlueCard from "../_components/BlueCard";
 import Vision from "../_assets/vision.png";
 import Mission from "../_assets/mission.jpg";
@@ -10,7 +9,7 @@ export default function About() {
       <h1 className="text-3xl font-bold mb-6 text-blue-900 ml-10">About Us</h1>
       <BlueCard
         title={<h3 className="text-black">Reaching out to the world!</h3>}
-        className="h-[200px] w-[900px] bg-blue-300"
+        className="h-[150px] w-[800px] bg-blue-300"
       >
         <p className="text-black text-lg">
           At AMaT-HCL® we provide 24/7 Medical and Health advisory and resources
@@ -39,7 +38,6 @@ export default function About() {
         </div>
       </div>
 
-      {/* Mission Section */}
       <div className="flex flex-col lg:flex-row mt-10 gap-6">
         <div className="flex-1 flex items-center justify-center">
           <div className="w-96 h-72 relative rounded-full overflow-hidden border-4 border-blue-900">

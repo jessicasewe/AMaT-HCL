@@ -1,16 +1,25 @@
+"use client";
+
 import React from "react";
 import {
   FaFacebook,
   FaTwitter,
   FaInstagram,
-  FaLinkedin,
   FaGithub,
   FaDribbble,
 } from "react-icons/fa";
 import Image from "next/image";
 import logo from "../_assets/logo.png";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Condition to hide the footer if on the dashboard
+  if (pathname.startsWith("/dashboard")) {
+    return null; // Don't render the footer if the current path is within /dashboard
+  }
+
   return (
     <footer className="bg-white dark:bg-blue-200">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">

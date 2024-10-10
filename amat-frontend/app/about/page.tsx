@@ -1,4 +1,3 @@
-// app/about/page.tsx
 import BlueCard from "../_components/BlueCard";
 import Vision from "../_assets/vision.png";
 import Mission from "../_assets/mission.jpg";
@@ -8,8 +7,11 @@ export default function About() {
   return (
     <section className="mb-20 p-5 pt-32">
       <h1 className="text-3xl font-bold mb-6 text-blue-900 ml-10">About Us</h1>
-      <BlueCard title="Reaching out to the world!">
-        <p className="text-blue-900">
+      <BlueCard
+        title={<h3 className="text-black">Reaching out to the world!</h3>}
+        className="h-[160px] w-[750px] bg-blue-400"
+      >
+        <p className="text-black text-lg">
           At AMaT-HCL® we provide 24/7 Medical and Health advisory and resources
           and expertise advisory.
         </p>
@@ -47,7 +49,6 @@ export default function About() {
             />
           </div>
         </div>
-
         <div className="flex-1 flex flex-col justify-center ml-20">
           <h2 className="text-blue-900 text-2xl font-semibold mb-4">
             OUR MISSION
@@ -72,7 +73,7 @@ export default function About() {
             Our team of experienced doctors and specialists provide thorough and
             accurate medical consultation, ensuring the best treatment for our
             patients. With our advanced technology, we offer virtual
-            consultation for the convenience of our clients..
+            consultation for the convenience of our clients.
           </p>
         </div>
       </div>

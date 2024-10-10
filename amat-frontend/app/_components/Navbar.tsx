@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -14,6 +14,11 @@ export default function Navbar() {
     { name: "Services", href: "/services" },
     { name: "Contact Us", href: "/contact-us" },
   ];
+
+  // Condition to hide the navbar if on the dashboard
+  if (pathname.startsWith("/dashboard")) {
+    return null; // Don't render the navbar if the current path is within /dashboard
+  }
 
   return (
     <nav className="fixed top-0 left-0 w-full p-5 flex items-center justify-between bg-white shadow-lg z-50">

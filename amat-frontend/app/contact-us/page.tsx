@@ -34,7 +34,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 pt-20">
-        <section className="bg-indigo-600 text-white text-center py-10 h-[207px] flex items-center justify-center flex-col">
+        <section className="bg-blue-400 text-white text-center py-10 h-[207px] flex items-center justify-center flex-col">
           <h1 className="text-4xl font-bold">Contact Us</h1>
           <p className="mt-2 text-lg">
             Have any questions? We'd love to hear from you.
@@ -44,7 +44,7 @@ export default function ContactPage() {
           <div className="mb-8 md:mb-0 flex flex-col items-center md:items-start">
             <h3 className="text-2xl font-semibold mb-4">Address Details</h3>
             <div className="flex items-center text-lg mb-2">
-              <FiMapPin className="mr-2 text-indigo-600" size={24} />
+              <FiMapPin className="mr-2 text-blue-600" size={24} />
               <span>Service Areas:</span>
             </div>
             <p className="text-lg">
@@ -54,11 +54,11 @@ export default function ContactPage() {
           <div className="flex flex-col items-center md:items-start">
             <h3 className="text-2xl font-semibold mb-4">Contact our Team</h3>
             <div className="flex items-center text-lg mb-2">
-              <FiPhone className="mr-2 text-indigo-600" size={24} />
+              <FiPhone className="mr-2 text-blue-600" size={24} />
               <span>055 577 8254</span>
             </div>
             <div className="flex items-center text-lg">
-              <FiMail className="mr-2 text-indigo-600" size={24} />
+              <FiMail className="mr-2 text-blue-600" size={24} />
               <span>amathcl2021@gmail.com</span>
             </div>
           </div>
@@ -83,7 +83,7 @@ export default function ContactPage() {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Enter your full name"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-colors duration-200 hover:border-indigo-600"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-colors duration-200 hover:border-blue-600"
                 required
               />
             </div>
@@ -98,7 +98,7 @@ export default function ContactPage() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter your email address"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-colors duration-200 hover:border-indigo-600"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-colors duration-200 hover:border-blue-600"
                 required
               />
             </div>
@@ -112,14 +112,14 @@ export default function ContactPage() {
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Enter your message"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-colors duration-200 hover:border-indigo-600"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-colors duration-200 hover:border-blue-600"
                 required
                 rows={5}
               />
             </div>
             <button
               type="submit"
-              className="w-full bg-orange-500 text-white p-3 rounded-lg hover:bg-orange-600 active:bg-orange-700 transition-colors duration-200 font-semibold"
+              className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 active:bg-blue-700 transition-colors duration-200 font-semibold"
             >
               Submit
             </button>

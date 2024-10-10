@@ -15,7 +15,7 @@ export default function BlueCard({
 }: BlueCardProps) {
   return (
     <div
-      className={`w-full bg-primary-700 rounded-lg shadow-lg overflow-hidden p-6 ml-8 h-[400px] ${className}`}
+      className={`bg-primary-700 rounded-lg shadow-lg overflow-hidden p-6 ml-8 ${className}`}
       style={{
         backgroundImage: `url(${backgroundImageUrl})`,
         backgroundSize: "cover",

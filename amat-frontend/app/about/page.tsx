@@ -9,7 +9,7 @@ export default function About() {
       <h1 className="text-3xl font-bold mb-6 text-blue-900 ml-10">About Us</h1>
       <BlueCard
         title={<h3 className="text-black">Reaching out to the world!</h3>}
-        className="h-[150px] w-[800px] bg-blue-300"
+        className="h-[160px] w-[750px] bg-blue-400"
       >
         <p className="text-black text-lg">
           At AMaT-HCL® we provide 24/7 Medical and Health advisory and resources

@@ -3,13 +3,12 @@ import { useState } from "react";
 import logo from "../../_assets/logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import FontAwesome icons
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 export default function Login() {
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); // Toggle password visibility
+    setShowPassword(!showPassword);
   };
 
   return (

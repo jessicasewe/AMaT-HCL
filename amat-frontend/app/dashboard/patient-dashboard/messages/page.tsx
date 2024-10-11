@@ -29,10 +29,10 @@ export default function Messages () {
             <div className="flex justify-between" style={{height: "100vh"}}>
                 {/* left section */}
                 <div
-                    className="border-solid border-r-2"
+                    className="border-solid border-r-2 bg-blue-500 text-white"
                     style={{flexGrow: "0.5"}}
                 >
-                    <div className="border-solid border-b-2 h-14 flex" style={{alignItems: "center"}}>
+                    <div className="border-solid border-b-2 h-14 flex bg-blue-800" style={{alignItems: "center"}}>
                         <Image 
                             src={logo} 
                             alt={'logo'} 
@@ -47,35 +47,35 @@ export default function Messages () {
                     <div>
                         <div >
                             <div>
-                                <div className='flex  p-3' style={{alignItems: "center"}}>
+                                <div className='flex  p-3 border-solid border-b-[1.5px] border-[#4646ff]' style={{alignItems: "center"}}>
                                     <FiStar className='mr-2'/>
                                     <span>Starred Messages</span>
                                 </div>
-                                <div className='flex  p-3' style={{alignItems: "center"}}>
+                                <div className='flex  p-3 border-solid border-b-[1.5px] border-[#4646ff]' style={{alignItems: "center"}}>
                                     <FiMapPin className='mr-2'/>
                                     <span>Hospital Nearby</span>
                                 </div>
-                                <div className='flex  p-3' style={{alignItems: "center"}}>
+                                <div className='flex  p-3 border-solid border-b-[1.5px] border-[#4646ff]' style={{alignItems: "center"}}>
                                     <FiUser className='mr-2'/>
                                     <span>Invite Friends</span>
                                 </div>
                             </div>
                             <div className='mt-10'>
-                                <div className='flex  p-3' style={{alignItems: "center"}}>
+                                <div className='flex  p-3 border-solid border-t-[1.5px] border-[#4646ff]' style={{alignItems: "center"}}>
                                     <FiHelpCircle className='mr-2'/>
                                     <span>AMaT-HCL FAQ</span>
                                 </div>
-                                <div className='flex  p-3' style={{alignItems: "center"}}>
+                                <div className='flex  p-3 border-solid border-t-[1.5px] border-[#4646ff]' style={{alignItems: "center"}}>
                                     <FiHeadphones className='mr-2'/>
                                     <span>Support</span>
                                 </div>
-                                <div className='flex  p-3' style={{alignItems: "center"}}>
+                                <div className='flex  p-3 border-solid border-t-[1.5px] border-[#4646ff]' style={{alignItems: "center"}}>
                                     <FiSettings className='mr-2'/>
                                     <span>Settings</span>
                                 </div>
                             </div>
                             <div style={{position: "fixed", bottom: "0"}}>
-                                <div className='flex  p-3 text-red-600' style={{alignItems: "center"}}>
+                                <div className='flex  p-3 font-serif text-[#ff0000]' style={{alignItems: "center",}}>
                                     <FiLogOut className='mr-2'/>
                                     <span>Log Out</span>
                                 </div>
@@ -90,7 +90,7 @@ export default function Messages () {
                     style={{flexGrow: "0.5"}}
                 >
                     <div 
-                        className="border-solid border-b-2 h-14 flex justify-center font-serif font-bold"
+                        className="border-solid border-b-2 h-14 flex justify-center font-serif font-bold bg-blue-800 text-white"
                         style={{alignItems: "center"}}
                     >
                         <FiMessageSquare className='mr-2'/>                            
@@ -230,7 +230,24 @@ export default function Messages () {
                 <div
                     className="border-solid border-r-2"
                     style={{flexGrow: "3"}}
-                >Part 3</div>
+                >
+                    <div>
+                    <div 
+                        className="border-solid border-b-2 h-14 flex justify-start font-serif font-bold bg-blue-800 text-white"
+                        style={{alignItems: "center"}}
+                    >
+                            <img 
+                                src={profilePicture.Amaka} 
+                                alt='amaka'
+                                className='lg:w-[3vw] lg:h-[3vw] md:w-[4vw] md:h-[4vw] w-[5vw] h-[5vw] rounded-full object-cover mr-2 ml-4'
+                            />
+                            <div className='ml-2'>
+                                <p className='font-bold'>Amaka Ikechukwu</p>
+                                <p className='font-thin text-green-300'>online</p>
+                            </div>                          
+                    </div>
+                    </div>
+                </div>
 
             </div>
         </div>

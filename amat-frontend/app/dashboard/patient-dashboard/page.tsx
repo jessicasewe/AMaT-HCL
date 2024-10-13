@@ -19,6 +19,7 @@ import {
   LineElement,
   Title,
 } from "chart.js";
+import Link from 'next/link';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title);
 
@@ -126,40 +127,28 @@ export default function PatientDashboard() {
         <div className="mt-8">
           <ul className="space-y-4">
             <li>
-              <a
-                href="#"
-                className="flex justify-between items-center py-2 px-4 text-base text-white hover:bg-blue-900 rounded-lg"
-              >
+              <Link href="/dashboard" className="flex justify-between items-center py-2 px-4 text-base text-white hover:bg-blue-900 rounded-lg">
                 Dashboard
                 <FaHome className="text-white text-xl" />
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="flex justify-between items-center py-2 px-4 text-base text-white hover:bg-blue-900 rounded-lg"
-              >
+              <Link href="/messages" className="flex justify-between items-center py-2 px-4 text-base text-white hover:bg-blue-900 rounded-lg">
                 Messages
                 <FaEnvelope className="text-white text-xl" />
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="flex justify-between items-center py-2 px-4 text-base text-white hover:bg-blue-900 rounded-lg"
-              >
+              <Link href="/appointment" className="flex justify-between items-center py-2 px-4 text-base text-white hover:bg-blue-900 rounded-lg">
                 Book Appointment
                 <FaCalendarAlt className="text-white text-xl" />
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
-                className="flex justify-between items-center py-2 px-4 text-base text-white hover:bg-blue-900 rounded-lg"
-              >
+              <Link href="/settings" className="flex justify-between items-center py-2 px-4 text-base text-white hover:bg-blue-900 rounded-lg">
                 Settings
                 <FaCog className="text-white text-xl" />
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

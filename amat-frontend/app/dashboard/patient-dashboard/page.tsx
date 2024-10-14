@@ -1,15 +1,6 @@
 "use client";
 import { useState } from "react";
 import DashboardNavbar from "@/app/_components/DashboardNavbar";
-import {
-  FaHome,
-  FaEnvelope,
-  FaCalendarAlt,
-  FaHeart,
-  FaTachometerAlt,
-  FaDownload,
-  FaCog,
-} from "react-icons/fa";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -19,7 +10,9 @@ import {
   LineElement,
   Title,
 } from "chart.js";
-import Link from 'next/link';
+import Sidebar from "@/app/_components/Sidebar"; // Import Sidebar component
+import Link from "next/link";
+import { FaHeart, FaTachometerAlt } from "react-icons/fa";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title);
 
@@ -114,46 +107,7 @@ export default function PatientDashboard() {
 
   return (
     <div className="min-h-screen flex bg-gray-100">
-      <div className="w-60 bg-blue-800 shadow-md flex-shrink-0">
-        <div className="flex items-center justify-center py-8">
-          <div className="bg-white text-black w-16 h-16 flex items-center justify-center rounded-full text-3xl font-bold">
-            {patient.initials}
-          </div>
-        </div>
-        <div className="text-center">
-          <p className="text-xl font-semibold text-white">{patient.fullName}</p>
-          <p className="text-sm text-white">{patient.profession}</p>
-        </div>
-        <div className="mt-8">
-          <ul className="space-y-4">
-            <li>
-              <Link href="/dashboard" className="flex justify-between items-center py-2 px-4 text-base text-white hover:bg-blue-900 rounded-lg">
-                Dashboard
-                <FaHome className="text-white text-xl" />
-              </Link>
-            </li>
-            <li>
-              <Link href="/messages" className="flex justify-between items-center py-2 px-4 text-base text-white hover:bg-blue-900 rounded-lg">
-                Messages
-                <FaEnvelope className="text-white text-xl" />
-              </Link>
-            </li>
-            <li>
-              <Link href="/appointment" className="flex justify-between items-center py-2 px-4 text-base text-white hover:bg-blue-900 rounded-lg">
-                Book Appointment
-                <FaCalendarAlt className="text-white text-xl" />
-              </Link>
-            </li>
-            <li>
-              <Link href="/settings" className="flex justify-between items-center py-2 px-4 text-base text-white hover:bg-blue-900 rounded-lg">
-                Settings
-                <FaCog className="text-white text-xl" />
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-
+      <Sidebar patient={patient} /> {/* Use the Sidebar component */}
       <div className="flex-1 flex flex-col">
         <div className="bg-white shadow-md">
           <DashboardNavbar />
@@ -224,34 +178,21 @@ export default function PatientDashboard() {
                     return (
                       <tr key={index} className="border-b border-gray-200">
                         <td className="py-3 flex items-center space-x-3">
-                          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 border border-blue-300 text-black text-sm font-medium">
+                          <div className="w-10 h-10 flex items-center justify-center bg-blue-500 text-white font-bold rounded-full">
                             {initials}
                           </div>
                           <span>{entry.checkupType}</span>
                         </td>
-                        <td className="py-3">{entry.doctor}</td>
-                        <td className="py-3">
-                          <span className="border border-blue-300 px-2 py-1 rounded-md">
-                            {entry.condition}
-                          </span>
-                        </td>
-                        <td className="py-3">{entry.date}</td>
-                        <td className="py-3 flex items-center space-x-4">
-                          {/* View Button */}
-                          <a
-                            href={`/${entry.document}`}
-                            target="_blank"
-                            className="text-green-500 hover:underline flex items-center"
+                        <td>{entry.doctor}</td>
+                        <td>{entry.condition}</td>
+                        <td>{entry.date}</td>
+                        <td>
+                          <Link
+                            href={`/documents/${entry.document}`}
+                            className="text-blue-500 hover:underline"
                           >
-                            View
-                          </a>
-                          <a
-                            href={`/${entry.document}`}
-                            download
-                            className="text-blue-500 hover:underline flex items-center"
-                          >
-                            <FaDownload className="mr-1" /> Download
-                          </a>
+                            View Document
+                          </Link>
                         </td>
                       </tr>
                     );

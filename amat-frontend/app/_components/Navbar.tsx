@@ -17,7 +17,11 @@ export default function Navbar() {
 
   // Condition to hide the navbar if on the dashboard
   if (pathname.startsWith("/dashboard")) {
-    return null; // Don't render the navbar if the current path is within /dashboard
+    return null;
+  } else if (pathname.startsWith("/super-admin")) {
+    return null;
+  } else if (pathname.startsWith("/appointment")) {
+    return null;
   }
 
   return (

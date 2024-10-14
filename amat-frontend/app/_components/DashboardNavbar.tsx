@@ -12,7 +12,7 @@ export default function DashboardNavbar() {
   const userName = "John Doe";
 
   return (
-    <nav className="w-full p-5 flex items-center justify-between bg-white shadow-lg">
+    <nav className="w-full p-3 flex items-center justify-between bg-white shadow-lg">
       <div className="flex items-center space-x-4">
         <Link href="/" className="flex items-center space-x-2">
           <Image src={logo} alt="Logo" width={60} height={50} />

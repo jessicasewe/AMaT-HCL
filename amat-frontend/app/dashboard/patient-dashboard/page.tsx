@@ -1,6 +1,9 @@
 "use client";
-import { useState } from "react";
-import DashboardNavbar from "@/app/_components/DashboardNavbar";
+
+import React, { useState } from "react";
+import DashboardNavbar from "@/app/_components/dashboard/DashboardNavbar";
+import DashboardNavMenu from "@/app/_components/dashboard/DashboardNavMenu"; // Mobile Sidebar
+import DashboardSidebar from "@/app/_components/dashboard/Sidebar"; // Desktop Sidebar
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -10,14 +13,25 @@ import {
   LineElement,
   Title,
 } from "chart.js";
-import Sidebar from "@/app/_components/Sidebar"; // Import Sidebar component
 import Link from "next/link";
 import { FaHeart, FaTachometerAlt } from "react-icons/fa";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title);
 
+interface Patient {
+  initials: string;
+  fullName: string;
+  profession: string;
+  age: number;
+  profilePicture: string;
+}
+
 export default function PatientDashboard() {
-  const patient = {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for mobile sidebar
+
+  const toggleMenu = () => setIsSidebarOpen(!isSidebarOpen); // Function to toggle sidebar
+
+  const patient: Patient = {
     fullName: "John Doe",
     initials: "JD",
     age: 45,
@@ -106,14 +120,27 @@ export default function PatientDashboard() {
   ];
 
   return (
-    <div className="min-h-screen flex bg-gray-100">
-      <Sidebar patient={patient} /> {/* Use the Sidebar component */}
+    <>
+    <div className="flex h-screen">
+      {/* Mobile Sidebar Menu */}
+      <DashboardNavMenu
+        patient={patient}
+        isOpen={isSidebarOpen}
+        toggleMenu={toggleMenu}
+      />
+
+      {/* Desktop Sidebar Menu */}
+      <DashboardSidebar patient={patient} />
+
+      {/* Main Content Area */}
       <div className="flex-1 flex flex-col">
-        <div className="bg-white shadow-md">
-          <DashboardNavbar />
-        </div>
+        {/* Navbar */}
+        <DashboardNavbar toggleMenu={toggleMenu} />
+
+        {/* Content */}
         <div className="p-6 flex-1">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Patient Info Card */}
             <div className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between">
               <img
                 src={patient.profilePicture}
@@ -131,6 +158,7 @@ export default function PatientDashboard() {
               </div>
             </div>
 
+            {/* Heart Rate Card */}
             <div className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-800 flex items-center">
                 <FaHeart className="text-red-500 mr-3" />
@@ -141,6 +169,7 @@ export default function PatientDashboard() {
               </div>
             </div>
 
+            {/* Blood Pressure Card */}
             <div className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-800 flex items-center">
                 <FaTachometerAlt className="text-blue-500 mr-3" /> Blood
@@ -152,6 +181,7 @@ export default function PatientDashboard() {
             </div>
           </div>
 
+          {/* Medical History Section */}
           <div className="mt-8">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Medical History
@@ -203,6 +233,7 @@ export default function PatientDashboard() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

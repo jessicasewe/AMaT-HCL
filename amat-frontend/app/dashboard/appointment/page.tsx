@@ -7,13 +7,14 @@ import { GiCheckMark } from "react-icons/gi";
 import ProgressBar from "@/app/_components/ProgressBar";
 import HealthProfileForm, {
   HealthProfileData,
-} from "@/app/_components/HealthProfileForm";
-import ReviewProfile from "@/app/_components/ReviewProfile";
+} from "@/app/_components/dashboard/HealthProfileForm";
+import ReviewProfile from "@/app/_components/dashboard/ReviewProfile";
 import Image from "next/image";
 import Doctor from "@/app/_assets/doctor.png";
 import useLocalStorage from "@/app/hooks/useLocalStorage";
-import Sidebar from "@/app/_components/Sidebar";
-import DashboardNavbar from "@/app/_components/DashboardNavbar";
+import DashboardNavMenu from "@/app/_components/dashboard/DashboardNavMenu"; // Mobile Sidebar
+import DashboardSidebar from "@/app/_components/dashboard/Sidebar"; // Desktop Sidebar
+import DashboardNavbar from "@/app/_components/dashboard/DashboardNavbar";
 
 export default function Appointment() {
   const router = useRouter();
@@ -39,6 +40,10 @@ export default function Appointment() {
     0
   );
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  // State for mobile sidebar
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const toggleMenu = () => setIsSidebarOpen(!isSidebarOpen);
 
   useEffect(() => {
     setMounted(true);
@@ -75,7 +80,7 @@ export default function Appointment() {
     return (
       <div className="space-y-6">
         <button
-          className="w-full bg-green-500 text-white py-3 rounded-md flex items-center justify-center mb-6"
+          className="w-full bg-green-500 text-white py-3 rounded-md flex items-center justify-center mb-6 hover:bg-green-600 transition-colors duration-200"
           onClick={onPaymentConfirm}
         >
           <span>Pay GHS 300</span>
@@ -85,27 +90,37 @@ export default function Appointment() {
     );
   };
 
+  // Define the patient details here or fetch from a context/state
+  const patient = {
+    initials: "JG",
+    fullName: "Jessica Guriyire",
+    profession: "Bad Bitch",
+  };
+
   return (
-    <div className="min-h-screen flex bg-gray-100">
-      <div className="fixed top-0 h-screen z-10 flex">
-        <Sidebar
-          patient={{
-            initials: "JG",
-            fullName: "Jessica Guriyire",
-            profession: "Bad Bitch",
-          }}
-        />
-      </div>
-      <div className="flex-1 flex flex-col ml-60">
-        {" "}
-        <div className="bg-white shadow-md sticky top-0 z-10">
-          <DashboardNavbar />
-        </div>
-        <div className="flex-1 overflow-y-auto">
+    <>
+    <div className="flex h-screen">
+      {/* Mobile Sidebar Menu */}
+      <DashboardNavMenu
+        patient={patient}
+        isOpen={isSidebarOpen}
+        toggleMenu={toggleMenu}
+      />
+
+      {/* Desktop Sidebar Menu */}
+      <DashboardSidebar patient={patient} />
+
+      {/* Main Content Area */}
+      <div className="flex flex-col flex-1">
+        {/* Navbar */}
+        <DashboardNavbar toggleMenu={toggleMenu} />
+
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto p-6">
           <div className="relative max-w-3xl mx-auto pt-9 p-6">
             {currentStep > 0 && (
               <button
-                className="flex items-center text-blue-600 mb-4"
+                className="flex items-center text-blue-600 mb-4 hover:text-blue-800 transition-colors duration-200"
                 onClick={handleBack}
               >
                 <FaArrowLeft className="w-5 h-5 mr-2" />
@@ -207,7 +222,7 @@ export default function Appointment() {
                         </p>
                       </div>
                       <button
-                        className="w-full bg-blue-600 text-white py-2 rounded-md"
+                        className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
                         onClick={() => {
                           clearData();
                           setIsModalOpen(false);
@@ -217,7 +232,7 @@ export default function Appointment() {
                         Confirm Appointment
                       </button>
                       <button
-                        className="w-full border border-gray-300 text-gray-600 py-2 rounded-md"
+                        className="w-full border border-gray-300 text-gray-600 py-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
                         onClick={() => setIsModalOpen(false)}
                       >
                         Cancel
@@ -230,6 +245,7 @@ export default function Appointment() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

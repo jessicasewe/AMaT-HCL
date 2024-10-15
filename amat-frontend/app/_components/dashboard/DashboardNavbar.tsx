@@ -1,27 +1,35 @@
 "use client";
 
 import React from "react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { FaSearch, FaBell, FaEnvelope } from "react-icons/fa";
-import logo from "../_assets/logo.png";
+import { FaSearch, FaBell, FaEnvelope, FaBars } from "react-icons/fa";
+import logo from "../../_assets/logo.png";
 
-export default function DashboardNavbar() {
-  const pathname = usePathname();
-  const userName = "John Doe";
+interface DashboardNavbarProps {
+  toggleMenu: () => void;
+}
+
+const DashboardNavbar = ({ toggleMenu }: DashboardNavbarProps) => {
 
   return (
     <nav className="w-full p-3 flex items-center justify-between bg-white shadow-lg">
+      {/* Mobile Menu Toggle Button */}
+      <div className="sm:hidden">
+        <button onClick={toggleMenu} className="text-blue-600 focus:outline-none" aria-label="Toggle Menu">
+          <FaBars size={24} />
+        </button>
+      </div>
+
+      {/* Logo */}
       <div className="flex items-center space-x-4">
         <Link href="/" className="flex items-center space-x-2">
           <Image src={logo} alt="Logo" width={60} height={50} />
         </Link>
       </div>
+
+      {/* Search Bar and Greeting */}
       <div className="flex items-center space-x-6 flex-1 justify-center">
-        <span className="text-lg font-semibold text-black">
-          Hello, {userName}
-        </span>
         <div className="relative">
           <input
             type="text"
@@ -31,6 +39,8 @@ export default function DashboardNavbar() {
           <FaSearch className="absolute right-2 top-2 text-gray-500" />
         </div>
       </div>
+
+      {/* Notifications and Log Out */}
       <div className="flex items-center space-x-6">
         <div className="relative">
           <FaBell className="text-blue-600 text-2xl cursor-pointer" />
@@ -53,4 +63,6 @@ export default function DashboardNavbar() {
       </div>
     </nav>
   );
-}
+};
+
+export default DashboardNavbar;

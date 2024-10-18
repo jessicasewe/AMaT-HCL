@@ -15,9 +15,12 @@ import { usePathname } from "next/navigation";
 export default function Footer() {
   const pathname = usePathname();
 
-  // Condition to hide the footer if on the dashboard
   if (pathname.startsWith("/dashboard")) {
-    return null; // Don't render the footer if the current path is within /dashboard
+    return null;
+  } else if (pathname.startsWith("/super-admin")) {
+    return null;
+  } else if (pathname.startsWith("/appointment")) {
+    return null;
   }
 
   return (

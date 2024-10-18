@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardNavbar from "@/app/_components/DashboardNavbar";
 import { Line } from "react-chartjs-2";
 import {
@@ -10,21 +10,58 @@ import {
   LineElement,
   Title,
 } from "chart.js";
-import Sidebar from "@/app/_components/Sidebar"; // Import Sidebar component
+import Sidebar from "@/app/_components/Sidebar";
 import Link from "next/link";
 import { FaHeart, FaTachometerAlt } from "react-icons/fa";
+import axios from "axios";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title);
 
 export default function PatientDashboard() {
-  const patient = {
-    fullName: "John Doe",
-    initials: "JD",
-    age: 45,
-    profession: "Software Engineer",
-    profilePicture:
-      "https://media.istockphoto.com/id/1437816897/photo/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring.jpg?s=612x612&w=0&k=20&c=tyLvtzutRh22j9GqSGI33Z4HpIwv9vL_MZw_xOE19NQ=",
-  };
+  interface Patient {
+    fullName: string;
+    profilePicture?: string;
+    age?: number;
+    profession?: string;
+    initials?: string;
+  }
+
+  const [patient, setPatient] = useState<Patient | undefined>(undefined);
+
+  useEffect(() => {
+    const fetchPatientData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/protected`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const user = response.data;
+        const initials = user.name
+          .split(" ")
+          .map((word: any[]) => word[0])
+          .join("");
+        setPatient({
+          fullName: user.name,
+          initials: initials,
+          age: user.age,
+          profession: user.profession,
+        });
+      } catch (error) {
+        console.error("Error fetching patient data", error);
+      }
+    };
+
+    fetchPatientData();
+  }, []);
+
+  if (!patient) {
+    return <div>Loading...</div>;
+  }
 
   const heartRateData = {
     labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
@@ -107,7 +144,7 @@ export default function PatientDashboard() {
 
   return (
     <div className="min-h-screen flex bg-gray-100">
-      <Sidebar patient={patient} /> {/* Use the Sidebar component */}
+      <Sidebar patient={patient} />
       <div className="flex-1 flex flex-col">
         <div className="bg-white shadow-md">
           <DashboardNavbar />
@@ -115,11 +152,17 @@ export default function PatientDashboard() {
         <div className="p-6 flex-1">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between">
-              <img
-                src={patient.profilePicture}
-                alt="Profile Picture"
-                className="w-12 h-12 rounded-full object-cover"
-              />
+              {patient.profilePicture ? (
+                <img
+                  src={patient.profilePicture}
+                  alt="Profile Picture"
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-12 h-12 flex items-center justify-center bg-blue-200 text-black font-bold rounded-full">
+                  {patient.initials}
+                </div>
+              )}
               <div>
                 <h2 className="text-lg font-semibold text-gray-800">
                   {patient.fullName}

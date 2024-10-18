@@ -1,14 +1,36 @@
 "use client";
-import logo from "../../_assets/logo.png";
-import Image from "next/image";
+import axios from "axios";
 import { useState } from "react";
 
 export default function Signup() {
   const [currentSection, setCurrentSection] = useState(1);
+  const [formData, setFormData] = useState({
+    name: "",
+    dob: "",
+    gender: "",
+    email: "",
+    phonenumber: "",
+    address: "",
+    city: "",
+    country: "",
+    preexisting_conditions: "",
+    current_medications: "",
+    password: "",
+    confirm_password: "",
+  });
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleInputChange = (e: { target: { name: any; value: any } }) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleContinue = () => {
     if (currentSection < 4) {
       setCurrentSection(currentSection + 1);
+    } else {
+      handleSubmit();
     }
   };
 
@@ -18,16 +40,40 @@ export default function Signup() {
     }
   };
 
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/users/signup",
+        formData
+      );
+      if (response.status === 201) {
+        console.log("Account created successfully: ", response.data);
+        setShowSuccessModal(true);
+        setTimeout(() => {
+          setShowSuccessModal(false);
+          navigateToDashboard();
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Error creating account: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const navigateToDashboard = () => {
+    setLoading(true);
+    window.location.href = "/dashboard/patient-dashboard";
+  };
+
   return (
-    <div className="flex min-h-screen flex-col justify-center px-6 py-5 lg:px-8">
+    <div
+      className={`flex min-h-screen flex-col justify-center px-6 py-5 lg:px-8 ${
+        loading ? "blur-sm" : ""
+      }`}
+    >
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        {/* <Image
-          className="mx-auto w-auto mb-3"
-          src={logo}
-          alt="AMaT-HCL"
-          width={70}
-          height={70}
-        /> */}
         <h2 className="mt-9 text-center text-2xl font-bold leading-9 tracking-tight text-blue-900">
           Sign up for an account
         </h2>
@@ -43,7 +89,7 @@ export default function Signup() {
             <>
               <div>
                 <label
-                  htmlFor="email"
+                  htmlFor="name"
                   className="block text-sm font-medium leading-6 text-blue-900"
                 >
                   Full Name
@@ -52,10 +98,12 @@ export default function Signup() {
                   <input
                     id="name"
                     name="name"
-                    type="name"
+                    type="text"
                     autoComplete="name"
                     placeholder="Enter your full name"
                     required
+                    value={formData.name}
+                    onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -74,6 +122,8 @@ export default function Signup() {
                     type="date"
                     autoComplete="bday"
                     required
+                    value={formData.dob}
+                    onChange={handleInputChange}
                     placeholder="Enter your date of birth"
                     className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-900 sm:text-sm sm:leading-6"
                   />
@@ -91,6 +141,8 @@ export default function Signup() {
                     id="gender"
                     name="gender"
                     required
+                    value={formData.gender}
+                    onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-900 sm:text-sm sm:leading-6"
                   >
                     <option value="">Select your gender</option>
@@ -114,6 +166,8 @@ export default function Signup() {
                     autoComplete="email"
                     placeholder="Enter your email address"
                     required
+                    value={formData.email}
+                    onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -141,6 +195,8 @@ export default function Signup() {
                     autoComplete="tel"
                     required
                     placeholder="Enter your phone number"
+                    value={formData.phonenumber}
+                    onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-900 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -159,6 +215,8 @@ export default function Signup() {
                     type="text"
                     placeholder="Enter your address"
                     required
+                    value={formData.address}
+                    onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -177,6 +235,8 @@ export default function Signup() {
                     type="text"
                     placeholder="Enter your city"
                     required
+                    value={formData.city}
+                    onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -195,6 +255,8 @@ export default function Signup() {
                     type="text"
                     placeholder="Enter your country"
                     required
+                    value={formData.country}
+                    onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -219,6 +281,8 @@ export default function Signup() {
                     rows={4}
                     placeholder="List chronic illnesses, allergies, past surgeries, etc."
                     required
+                    value={formData.preexisting_conditions}
+                    onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -236,6 +300,8 @@ export default function Signup() {
                     name="current_medications"
                     rows={4}
                     placeholder="List any medications you are currently taking."
+                    value={formData.current_medications}
+                    onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -261,6 +327,8 @@ export default function Signup() {
                     autoComplete="new-password"
                     required
                     placeholder="Create your password"
+                    value={formData.password}
+                    onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -280,6 +348,8 @@ export default function Signup() {
                     autoComplete="new-password"
                     required
                     placeholder="Confirm your password"
+                    value={formData.confirm_password}
+                    onChange={handleInputChange}
                     className="block w-full rounded-md border-0 py-2 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -305,6 +375,23 @@ export default function Signup() {
           </div>
         </form>
       </div>
+
+      {showSuccessModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded shadow-md">
+            <h3 className="text-lg font-medium text-green-600">Success!</h3>
+            <p className="mt-2 text-sm text-gray-600">
+              Account created successfully.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="loader"></div>
+        </div>
+      )}
     </div>
   );
 }

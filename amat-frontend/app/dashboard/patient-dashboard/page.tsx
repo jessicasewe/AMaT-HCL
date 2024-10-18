@@ -1,6 +1,14 @@
 "use client";
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import DashboardNavbar from "@/app/_components/DashboardNavbar";
+=======
+
+import React, { useState } from "react";
+import DashboardNavbar from "@/app/_components/dashboard/DashboardNavbar";
+import DashboardNavMenu from "@/app/_components/dashboard/DashboardNavMenu"; // Mobile Sidebar
+import DashboardSidebar from "@/app/_components/dashboard/Sidebar"; // Desktop Sidebar
+>>>>>>> 21dc4817552afa39696f6f1152afab579d8c71b9
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -10,14 +18,26 @@ import {
   LineElement,
   Title,
 } from "chart.js";
+<<<<<<< HEAD
 import Sidebar from "@/app/_components/Sidebar";
+=======
+>>>>>>> 21dc4817552afa39696f6f1152afab579d8c71b9
 import Link from "next/link";
 import { FaHeart, FaTachometerAlt } from "react-icons/fa";
 import axios from "axios";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title);
 
+interface Patient {
+  initials: string;
+  fullName: string;
+  profession: string;
+  age: number;
+  profilePicture: string;
+}
+
 export default function PatientDashboard() {
+<<<<<<< HEAD
   interface Patient {
     fullName: string;
     profilePicture?: string;
@@ -62,6 +82,20 @@ export default function PatientDashboard() {
   if (!patient) {
     return <div>Loading...</div>;
   }
+=======
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for mobile sidebar
+
+  const toggleMenu = () => setIsSidebarOpen(!isSidebarOpen); // Function to toggle sidebar
+
+  const patient: Patient = {
+    fullName: "John Doe",
+    initials: "JD",
+    age: 45,
+    profession: "Software Engineer",
+    profilePicture:
+      "https://media.istockphoto.com/id/1437816897/photo/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring.jpg?s=612x612&w=0&k=20&c=tyLvtzutRh22j9GqSGI33Z4HpIwv9vL_MZw_xOE19NQ=",
+  };
+>>>>>>> 21dc4817552afa39696f6f1152afab579d8c71b9
 
   const heartRateData = {
     labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
@@ -143,14 +177,32 @@ export default function PatientDashboard() {
   ];
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen flex bg-gray-100">
       <Sidebar patient={patient} />
+=======
+    <>
+    <div className="flex h-screen">
+      {/* Mobile Sidebar Menu */}
+      <DashboardNavMenu
+        patient={patient}
+        isOpen={isSidebarOpen}
+        toggleMenu={toggleMenu}
+      />
+
+      {/* Desktop Sidebar Menu */}
+      <DashboardSidebar patient={patient} />
+
+      {/* Main Content Area */}
+>>>>>>> 21dc4817552afa39696f6f1152afab579d8c71b9
       <div className="flex-1 flex flex-col">
-        <div className="bg-white shadow-md">
-          <DashboardNavbar />
-        </div>
+        {/* Navbar */}
+        <DashboardNavbar toggleMenu={toggleMenu} />
+
+        {/* Content */}
         <div className="p-6 flex-1">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Patient Info Card */}
             <div className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between">
               {patient.profilePicture ? (
                 <img
@@ -174,6 +226,7 @@ export default function PatientDashboard() {
               </div>
             </div>
 
+            {/* Heart Rate Card */}
             <div className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-800 flex items-center">
                 <FaHeart className="text-red-500 mr-3" />
@@ -184,6 +237,7 @@ export default function PatientDashboard() {
               </div>
             </div>
 
+            {/* Blood Pressure Card */}
             <div className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-800 flex items-center">
                 <FaTachometerAlt className="text-blue-500 mr-3" /> Blood
@@ -195,6 +249,7 @@ export default function PatientDashboard() {
             </div>
           </div>
 
+          {/* Medical History Section */}
           <div className="mt-8">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
               Medical History
@@ -246,6 +301,7 @@ export default function PatientDashboard() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

@@ -21,6 +21,8 @@ export default function Footer() {
     return null;
   } else if (pathname.startsWith("/appointment")) {
     return null;
+  } else if (pathname.startsWith("/medical_auth/login")) {
+    return null;
   }
 
   return (

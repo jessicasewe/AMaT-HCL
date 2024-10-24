@@ -11,6 +11,7 @@ router.post("/signup", async (req, res) => {
     const {
       name,
       dob,
+      age,
       gender,
       email,
       phonenumber,
@@ -36,6 +37,7 @@ router.post("/signup", async (req, res) => {
     user = new User({
       name,
       dob,
+      age,
       gender,
       email,
       phonenumber,
@@ -48,6 +50,14 @@ router.post("/signup", async (req, res) => {
     });
 
     await user.save();
+
+    const token = jwt.sign(
+      { id: user._id, name: user.name },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: 86400,
+      }
+    );
     res.status(201).json(user);
   } catch (err) {
     console.error("Error creating user:", err);

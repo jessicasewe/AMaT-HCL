@@ -15,6 +15,7 @@ import useLocalStorage from "@/app/hooks/useLocalStorage";
 import DashboardNavMenu from "@/app/_components/dashboard/DashboardNavMenu"; // Mobile Sidebar
 import DashboardSidebar from "@/app/_components/dashboard/Sidebar"; // Desktop Sidebar
 import DashboardNavbar from "@/app/_components/dashboard/DashboardNavbar";
+import axios from "axios";
 
 export default function Appointment() {
   const router = useRouter();
@@ -45,8 +46,46 @@ export default function Appointment() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleMenu = () => setIsSidebarOpen(!isSidebarOpen);
 
+  interface Patient {
+    fullName: string;
+    initials: string;
+    age: number;
+    profession: string;
+  }
+
+  const [patient, setPatient] = useState<Patient | undefined>(undefined);
+
   useEffect(() => {
     setMounted(true);
+
+    const fetchPatientData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/protected`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const user = response.data;
+        const initials = user.name
+          .split(" ")
+          .map((word: string) => word[0])
+          .join("");
+        setPatient({
+          fullName: user.name,
+          initials: initials,
+          age: user.age,
+          profession: user.profession,
+        });
+      } catch (error) {
+        console.error("Error fetching patient data", error);
+      }
+    };
+
+    fetchPatientData();
   }, []);
 
   const handleNext = () => {
@@ -70,8 +109,8 @@ export default function Appointment() {
     window.localStorage.removeItem("currentStep");
   };
 
-  if (!mounted) {
-    return null;
+  if (!mounted || !patient) {
+    return <div className="text-purple-700">Loading...</div>;
   }
 
   const Payment: React.FC<{ onPaymentConfirm: () => void }> = ({
@@ -90,161 +129,155 @@ export default function Appointment() {
     );
   };
 
-  // Define the patient details here or fetch from a context/state
-  const patient = {
-    initials: "JG",
-    fullName: "Jessica Guriyire",
-    profession: "Bad Bitch",
-  };
-
   return (
     <>
-    <div className="flex h-screen">
-      {/* Mobile Sidebar Menu */}
-      <DashboardNavMenu
-        patient={patient}
-        isOpen={isSidebarOpen}
-        toggleMenu={toggleMenu}
-      />
+      <div className="flex h-screen">
+        {/* Mobile Sidebar Menu */}
+        <DashboardNavMenu
+          patient={patient}
+          isOpen={isSidebarOpen}
+          toggleMenu={toggleMenu}
+        />
 
-      {/* Desktop Sidebar Menu */}
-      <DashboardSidebar patient={patient} />
+        {/* Desktop Sidebar Menu */}
+        <DashboardSidebar patient={patient} />
 
-      {/* Main Content Area */}
-      <div className="flex flex-col flex-1">
-        {/* Navbar */}
-        <DashboardNavbar toggleMenu={toggleMenu} />
+        {/* Main Content Area */}
+        <div className="flex flex-col flex-1">
+          {/* Navbar */}
+          <DashboardNavbar toggleMenu={toggleMenu} />
 
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6">
-          <div className="relative max-w-3xl mx-auto pt-9 p-6">
-            {currentStep > 0 && (
-              <button
-                className="flex items-center text-blue-600 mb-4 hover:text-blue-800 transition-colors duration-200"
-                onClick={handleBack}
-              >
-                <FaArrowLeft className="w-5 h-5 mr-2" />
-                Back
-              </button>
-            )}
+          {/* Content */}
+          <div className="flex-1 overflow-y-auto p-6">
+            <div className="relative max-w-3xl mx-auto pt-9 p-6">
+              {currentStep > 0 && (
+                <button
+                  className="flex items-center text-blue-600 mb-4 hover:text-blue-800 transition-colors duration-200"
+                  onClick={handleBack}
+                >
+                  <FaArrowLeft className="w-5 h-5 mr-2" />
+                  Back
+                </button>
+              )}
 
-            {currentStep === 0 && (
-              <>
-                <h1 className="text-2xl font-bold text-black">
-                  Health Profile
-                </h1>
-                <p className="text-gray-500 mb-4">
-                  Kindly provide the patient’s medical information and history.
-                </p>
-              </>
-            )}
+              {currentStep === 0 && (
+                <>
+                  <h1 className="text-2xl font-bold text-black">
+                    Health Profile
+                  </h1>
+                  <p className="text-gray-500 mb-4">
+                    Kindly provide the patient’s medical information and
+                    history.
+                  </p>
+                </>
+              )}
 
-            {currentStep === 1 && (
-              <>
-                <h1 className="text-2xl font-bold text-black">
-                  Review Profile
-                </h1>
-                <p className="text-gray-500 mt-8 mb-4">
-                  Make sure all details are correct as this information will aid
-                  the Medical Practitioner.
-                </p>
-              </>
-            )}
+              {currentStep === 1 && (
+                <>
+                  <h1 className="text-2xl font-bold text-black">
+                    Review Profile
+                  </h1>
+                  <p className="text-gray-500 mt-8 mb-4">
+                    Make sure all details are correct as this information will
+                    aid the Medical Practitioner.
+                  </p>
+                </>
+              )}
 
-            {currentStep === 2 && (
-              <>
-                <h1 className="text-2xl font-bold text-black">
-                  Review and Confirm Payment
-                </h1>
-                <p className="text-gray-500 mb-4 mt-8">
-                  Make sure all details are correct as this information will aid
-                  the Medical Practitioner.
-                </p>
-              </>
-            )}
+              {currentStep === 2 && (
+                <>
+                  <h1 className="text-2xl font-bold text-black">
+                    Review and Confirm Payment
+                  </h1>
+                  <p className="text-gray-500 mb-4 mt-8">
+                    Make sure all details are correct as this information will
+                    aid the Medical Practitioner.
+                  </p>
+                </>
+              )}
 
-            <ProgressBar
-              stepsCompleted={currentStep + 1}
-              totalSteps={steps.length}
-            />
-
-            {currentStep === 0 && (
-              <HealthProfileForm
-                initialData={profileData}
-                onNext={(data: HealthProfileData) => {
-                  setProfileData(data);
-                  handleNext();
-                }}
+              <ProgressBar
+                stepsCompleted={currentStep + 1}
+                totalSteps={steps.length}
               />
-            )}
 
-            {currentStep === 1 && (
-              <ReviewProfile
-                data={profileData}
-                onEdit={handleEdit}
-                onNext={handleNext}
-              />
-            )}
+              {currentStep === 0 && (
+                <HealthProfileForm
+                  initialData={profileData}
+                  onNext={(data: HealthProfileData) => {
+                    setProfileData(data);
+                    handleNext();
+                  }}
+                />
+              )}
 
-            {currentStep === 2 && (
-              <Payment onPaymentConfirm={handlePaymentConfirmation} />
-            )}
+              {currentStep === 1 && (
+                <ReviewProfile
+                  data={profileData}
+                  onEdit={handleEdit}
+                  onNext={handleNext}
+                />
+              )}
 
-            {isModalOpen && (
-              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
-                <div className="bg-white rounded-lg w-full max-w-md p-6">
-                  <div className="text-center">
-                    <div className="w-24 h-24 mx-auto mb-4 relative">
-                      <Image
-                        src={Doctor}
-                        alt="Doctor"
-                        className="rounded-full object-cover"
-                        fill
-                        style={{ objectFit: "cover" }}
-                      />
-                    </div>
-                    <h2 className="text-xl font-semibold text-black mt-4">
-                      Your upcoming virtual meeting with <br />
-                      <span className="text-blue-600">
-                        Dr. Devis Joshua
-                      </span>{" "}
-                      has been scheduled.
-                    </h2>
-                    <p className="text-gray-500 mt-2">Today, 12:30PM GMT</p>
+              {currentStep === 2 && (
+                <Payment onPaymentConfirm={handlePaymentConfirmation} />
+              )}
 
-                    <div className="mt-6 space-y-4">
-                      <div className="flex items-center space-x-3">
-                        <div className="bg-purple-100 rounded-full p-2">
-                          <FaVideo className="text-purple-600 w-6 h-6" />
-                        </div>
-                        <p className="text-gray-600">
-                          You will be contacted via video call.
-                        </p>
+              {isModalOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
+                  <div className="bg-white rounded-lg w-full max-w-md p-6">
+                    <div className="text-center">
+                      <div className="w-24 h-24 mx-auto mb-4 relative">
+                        <Image
+                          src={Doctor}
+                          alt="Doctor"
+                          className="rounded-full object-cover"
+                          fill
+                          style={{ objectFit: "cover" }}
+                        />
                       </div>
-                      <button
-                        className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
-                        onClick={() => {
-                          clearData();
-                          setIsModalOpen(false);
-                          router.push("/appointment/success");
-                        }}
-                      >
-                        Confirm Appointment
-                      </button>
-                      <button
-                        className="w-full border border-gray-300 text-gray-600 py-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
-                        onClick={() => setIsModalOpen(false)}
-                      >
-                        Cancel
-                      </button>
+                      <h2 className="text-xl font-semibold text-black mt-4">
+                        Your upcoming virtual meeting with <br />
+                        <span className="text-blue-600">
+                          Dr. Devis Joshua
+                        </span>{" "}
+                        has been scheduled.
+                      </h2>
+                      <p className="text-gray-500 mt-2">Today, 12:30PM GMT</p>
+
+                      <div className="mt-6 space-y-4">
+                        <div className="flex items-center space-x-3">
+                          <div className="bg-purple-100 rounded-full p-2">
+                            <FaVideo className="text-purple-600 w-6 h-6" />
+                          </div>
+                          <p className="text-gray-600">
+                            You will be contacted via video call.
+                          </p>
+                        </div>
+                        <button
+                          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
+                          onClick={() => {
+                            clearData();
+                            setIsModalOpen(false);
+                            router.push("/appointment/success");
+                          }}
+                        >
+                          Confirm Appointment
+                        </button>
+                        <button
+                          className="w-full border border-gray-300 text-gray-600 py-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
+                          onClick={() => setIsModalOpen(false)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </>
   );

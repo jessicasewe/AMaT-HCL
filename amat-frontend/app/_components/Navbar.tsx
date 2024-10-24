@@ -22,6 +22,8 @@ export default function Navbar() {
     return null;
   } else if (pathname.startsWith("/appointment")) {
     return null;
+  } else if (pathname.startsWith("/medical_auth/login")) {
+    return null;
   }
 
   return (

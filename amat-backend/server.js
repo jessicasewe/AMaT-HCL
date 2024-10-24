@@ -33,6 +33,10 @@ app.use("/api/users", userRoutes);
 const patientRoutes = require("./routes/Patient");
 app.use("/api/patients", patientRoutes);
 
+// Medical Practitioner routes
+const medicalPractitionerRoutes = require("./routes/Medical_Practitioners");
+app.use("/api/medical-practitioners", medicalPractitionerRoutes);
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);

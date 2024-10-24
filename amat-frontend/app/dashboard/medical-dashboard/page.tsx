@@ -1,6 +1,6 @@
 "use client";
-import DashboardNavbar from "@/app/_components/DashboardNavbar";
-import MedicalDashboardSidebar from "@/app/_components/MedicalDashboardSidebar";
+import DashboardNavbar from "@/app/_components/dashboard/DashboardNavbar";
+import MedicalDashboardSidebar from "@/app/_components/dashboard/MedicalDashboardSidebar";
 import { FaUser, FaUserFriends, FaFileAlt, FaComments } from "react-icons/fa";
 
 export default function MedicalDashboard() {
@@ -16,7 +16,11 @@ export default function MedicalDashboard() {
       {/* Use the new sidebar */}
       <div className="flex-1 flex flex-col">
         <div className="bg-white shadow-md">
-          <DashboardNavbar />
+          <DashboardNavbar
+            toggleMenu={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
         </div>
         <div className="flex mt-4 ml-4">
           <div className="flex-1 flex flex-wrap">

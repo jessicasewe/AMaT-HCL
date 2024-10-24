@@ -1,8 +1,8 @@
 // LabReportsPage.js
 "use client";
 import { SetStateAction, useState } from "react";
-import DashboardNavbar from "@/app/_components/DashboardNavbar";
-import MedicalDashboardSidebar from "@/app/_components/MedicalDashboardSidebar";
+import DashboardNavbar from "@/app/_components/dashboard/DashboardNavbar";
+import MedicalDashboardSidebar from "@/app/_components/dashboard/MedicalDashboardSidebar";
 import AddReportModal from "@/app/_components/AddReportModal";
 import ReportDetailsModal from "@/app/_components/ReportDetailsModal";
 import { FaPlus, FaEye } from "react-icons/fa";
@@ -35,27 +35,50 @@ const LabReportsPage = () => {
 
   const [reports, setReports] = useState(initialReports);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [selectedReport, setSelectedReport] = useState(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [selectedReport, setSelectedReport] = useState<{
+    id: string;
+    patientName: string;
+    date: string;
+    reportType: string;
+    status: string;
+    details: string;
+  } | null>(null);
 
-  const handleAddReport = async (reportData: any) => {
+  const handleAddReport = (reportData: {
+    patientName: string;
+    date: string;
+    reportType: string;
+    status: string;
+    details: string;
+  }) => {
     // Call your API to upload the report
     const newReport = { id: `R00${reports.length + 1}`, ...reportData };
     setReports([...reports, newReport]);
     setIsAddModalOpen(false);
   };
 
-  const handleViewDetails = (report: SetStateAction<null>) => {
-    setSelectedReport(report);
-    setIsDetailModalOpen(true);
-  };
+  function handleViewDetails(report: {
+    id: string;
+    patientName: string;
+    date: string;
+    reportType: string;
+    status: string;
+    details: string;
+  }): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <div className="min-h-screen flex bg-gray-100">
       <MedicalDashboardSidebar medicalprofessional={medicalprofessional} />
       <div className="flex-1 flex flex-col">
         <div className="bg-white shadow-md">
-          <DashboardNavbar />
+          <DashboardNavbar
+            toggleMenu={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
         </div>
         <div className="flex flex-col mt-4 mx-4">
           <h2 className="text-2xl font-bold mb-4 text-black">
@@ -112,7 +135,7 @@ const LabReportsPage = () => {
                   </td>
                   <td className="py-2 px-4 text-black text-xs whitespace-nowrap w-40">
                     <button
-                      onClick={() => handleViewDetails()}
+                      onClick={() => handleViewDetails(report)}
                       className="text-blue-600 hover:underline mr-3"
                     >
                       <FaEye /> View

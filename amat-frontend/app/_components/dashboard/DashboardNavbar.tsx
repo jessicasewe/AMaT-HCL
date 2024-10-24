@@ -11,12 +11,15 @@ interface DashboardNavbarProps {
 }
 
 const DashboardNavbar = ({ toggleMenu }: DashboardNavbarProps) => {
-
   return (
     <nav className="w-full p-3 flex items-center justify-between bg-white shadow-lg">
       {/* Mobile Menu Toggle Button */}
       <div className="sm:hidden">
-        <button onClick={toggleMenu} className="text-blue-600 focus:outline-none" aria-label="Toggle Menu">
+        <button
+          onClick={toggleMenu}
+          className="text-blue-600 focus:outline-none"
+          aria-label="Toggle Menu"
+        >
           <FaBars size={24} />
         </button>
       </div>
@@ -55,7 +58,7 @@ const DashboardNavbar = ({ toggleMenu }: DashboardNavbarProps) => {
           </span>
         </div>
         <Link
-          href="/auth/logout"
+          href="/auth/login"
           className="text-blue-900 font-sans font-semibold transition-colors duration-200 hover:text-indigo-600"
         >
           Log Out

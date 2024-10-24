@@ -49,6 +49,8 @@ export default function Signup() {
       );
       if (response.status === 201) {
         console.log("Account created successfully: ", response.data);
+        const { token } = response.data;
+        localStorage.setItem("token", token);
         setShowSuccessModal(true);
         setTimeout(() => {
           setShowSuccessModal(false);

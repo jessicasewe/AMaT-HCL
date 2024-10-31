@@ -12,10 +12,12 @@ import ReviewProfile from "@/app/_components/dashboard/ReviewProfile";
 import Image from "next/image";
 import Doctor from "@/app/_assets/doctor.png";
 import useLocalStorage from "@/app/hooks/useLocalStorage";
-import DashboardNavMenu from "@/app/_components/dashboard/DashboardNavMenu"; // Mobile Sidebar
-import DashboardSidebar from "@/app/_components/dashboard/Sidebar"; // Desktop Sidebar
+import DashboardNavMenu from "@/app/_components/dashboard/DashboardNavMenu";
+import DashboardSidebar from "@/app/_components/dashboard/Sidebar";
 import DashboardNavbar from "@/app/_components/dashboard/DashboardNavbar";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Appointment() {
   const router = useRouter();
@@ -100,8 +102,28 @@ export default function Appointment() {
     setCurrentStep(0);
   };
 
-  const handlePaymentConfirmation = () => {
-    setIsModalOpen(true);
+  const handlePaymentConfirmation = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      console.log("Profile Data:", profileData);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/book-appointment`,
+        profileData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 201) {
+        toast.success("Payment and Appointment booked successfully");
+        setIsModalOpen(true);
+      }
+    } catch (error) {
+      console.error("Error booking appointment", error);
+      toast.error("Error booking appointment. Please try again.");
+    }
   };
 
   const clearData = () => {
@@ -131,6 +153,7 @@ export default function Appointment() {
 
   return (
     <>
+      <ToastContainer />
       <div className="flex h-screen">
         {/* Mobile Sidebar Menu */}
         <DashboardNavMenu

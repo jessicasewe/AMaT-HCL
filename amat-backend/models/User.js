@@ -51,6 +51,14 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    profession: { type: String },
+    profilePicture: { type: String },
+    notifications: {
+      emailNotifications: { type: Boolean, default: true },
+      smsNotifications: { type: Boolean, default: false },
+      pushNotifications: { type: Boolean, default: true },
+    },
+    twoFactorAuth: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

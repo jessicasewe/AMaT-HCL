@@ -51,7 +51,7 @@ const MedicalDashboardSidebar = ({
             >
               Dashboard
               <FaHome className="text-gray-700 text-xl" />
-            </a>
+            </a> 
           </li>
           <li>
             <a

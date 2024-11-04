@@ -1,11 +1,19 @@
-// LabReportsPage.js
 "use client";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import DashboardNavbar from "@/app/_components/dashboard/DashboardNavbar";
 import MedicalDashboardSidebar from "@/app/_components/dashboard/MedicalDashboardSidebar";
 import AddReportModal from "@/app/_components/AddReportModal";
 import ReportDetailsModal from "@/app/_components/ReportDetailsModal";
-import { FaPlus, FaEye } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
+
+type ReportDetailsType = {
+  id: string;
+  patientName: string;
+  date: string;
+  reportType: string;
+  status: string;
+  details: string;
+};
 
 const LabReportsPage = () => {
   const medicalprofessional = {
@@ -14,7 +22,7 @@ const LabReportsPage = () => {
     profession: "Hospital Administrator",
   };
 
-  const initialReports = [
+  const initialReports: ReportDetailsType[] = [
     {
       id: "R001",
       patientName: "John Smith",
@@ -36,37 +44,18 @@ const LabReportsPage = () => {
   const [reports, setReports] = useState(initialReports);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-  const [selectedReport, setSelectedReport] = useState<{
-    id: string;
-    patientName: string;
-    date: string;
-    reportType: string;
-    status: string;
-    details: string;
-  } | null>(null);
+  const [selectedReport, setSelectedReport] =
+    useState<ReportDetailsType | null>(null);
 
-  const handleAddReport = (reportData: {
-    patientName: string;
-    date: string;
-    reportType: string;
-    status: string;
-    details: string;
-  }) => {
-    // Call your API to upload the report
+  const handleAddReport = async (reportData: Omit<ReportDetailsType, "id">) => {
     const newReport = { id: `R00${reports.length + 1}`, ...reportData };
     setReports([...reports, newReport]);
     setIsAddModalOpen(false);
   };
 
-  function handleViewDetails(report: {
-    id: string;
-    patientName: string;
-    date: string;
-    reportType: string;
-    status: string;
-    details: string;
-  }): void {
-    throw new Error("Function not implemented.");
+  function handleViewDetails(report: ReportDetailsType): void {
+    setSelectedReport(report);
+    setIsDetailModalOpen(true);
   }
 
   return (
@@ -74,11 +63,7 @@ const LabReportsPage = () => {
       <MedicalDashboardSidebar medicalprofessional={medicalprofessional} />
       <div className="flex-1 flex flex-col">
         <div className="bg-white shadow-md">
-          <DashboardNavbar
-            toggleMenu={function (): void {
-              throw new Error("Function not implemented.");
-            }}
-          />
+          <DashboardNavbar toggleMenu={() => {}} />
         </div>
         <div className="flex flex-col mt-4 mx-4">
           <h2 className="text-2xl font-bold mb-4 text-black">
@@ -110,35 +95,32 @@ const LabReportsPage = () => {
                 <th className="py-2 px-4 text-black text-sm whitespace-nowrap w-40">
                   Status
                 </th>
-                <th className="py-2 px-4 text-black text-sm whitespace-nowrap w-40">
-                  Actions
+                <th className="py-2 px-4 text-black text-sm whitespace-nowrap w-20 text-center">
+                  View
                 </th>
               </tr>
             </thead>
             <tbody>
               {reports.map((report) => (
-                <tr key={report.id} className="text-left">
-                  <td className="py-2 px-4 text-black text-xs whitespace-nowrap w-20">
+                <tr key={report.id} className="border-b border-gray-200">
+                  <td className="py-2 px-4 text-sm text-black whitespace-nowrap">
                     {report.id}
                   </td>
-                  <td className="py-2 px-4 text-black text-xs whitespace-nowrap w-40">
+                  <td className="py-2 px-4 text-sm text-black whitespace-nowrap">
                     {report.patientName}
                   </td>
-                  <td className="py-2 px-4 text-black text-xs whitespace-nowrap w-40">
+                  <td className="py-2 px-4 text-sm text-black whitespace-nowrap">
                     {report.date}
                   </td>
-                  <td className="py-2 px-4 text-black text-xs whitespace-nowrap w-40">
+                  <td className="py-2 px-4 text-sm text-black whitespace-nowrap">
                     {report.reportType}
                   </td>
-                  <td className="py-2 px-4 text-black text-xs whitespace-nowrap w-40">
+                  <td className="py-2 px-4 text-sm text-black whitespace-nowrap">
                     {report.status}
                   </td>
-                  <td className="py-2 px-4 text-black text-xs whitespace-nowrap w-40">
-                    <button
-                      onClick={() => handleViewDetails(report)}
-                      className="text-blue-600 hover:underline mr-3"
-                    >
-                      <FaEye /> View
+                  <td className="py-2 px-4 text-center">
+                    <button onClick={() => handleViewDetails(report)}>
+                      <FaEye className="text-blue-500" />
                     </button>
                   </td>
                 </tr>
@@ -147,19 +129,15 @@ const LabReportsPage = () => {
           </table>
         </div>
       </div>
-
-      {/* Modal for Adding a New Report */}
       <AddReportModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onSubmit={handleAddReport}
       />
-
-      {/* Modal for Viewing Report Details */}
       <ReportDetailsModal
+        report={selectedReport}
         isOpen={isDetailModalOpen}
         onClose={() => setIsDetailModalOpen(false)}
-        report={selectedReport}
       />
     </div>
   );

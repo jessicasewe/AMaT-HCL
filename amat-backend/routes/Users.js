@@ -11,7 +11,6 @@ router.post("/signup", async (req, res) => {
     const {
       name,
       dob,
-      age,
       gender,
       email,
       phonenumber,
@@ -37,7 +36,6 @@ router.post("/signup", async (req, res) => {
     user = new User({
       name,
       dob,
-      age,
       gender,
       email,
       phonenumber,
@@ -133,20 +131,11 @@ router.get("/", async (req, res) => {
 router.put("/profile", verifyToken, async (req, res) => {
   try {
     const userId = req.userId;
-    const {
-      name,
-      email,
-      age,
-      dob,
-      gender,
-      phonenumber,
-      address,
-      city,
-      country,
-    } = req.body;
+    const { name, email, dob, gender, phonenumber, address, city, country } =
+      req.body;
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { name, email, dob, age, gender, phonenumber, address, city, country },
+      { name, email, dob, gender, phonenumber, address, city, country },
       { new: true }
     ).select("-password");
     res.status(200).json(updatedUser);

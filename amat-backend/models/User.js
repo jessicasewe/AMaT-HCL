@@ -10,10 +10,6 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    age: {
-      type: Number,
-      required: true,
-    },
     gender: {
       type: String,
       required: true,
@@ -41,24 +37,16 @@ const UserSchema = new mongoose.Schema(
     },
     preexisting_conditions: {
       type: String,
-      required: true,
+      required: false,
     },
     current_medications: {
       type: String,
-      required: true,
+      required: false,
     },
     password: {
       type: String,
       required: true,
     },
-    profession: { type: String },
-    profilePicture: { type: String },
-    notifications: {
-      emailNotifications: { type: Boolean, default: true },
-      smsNotifications: { type: Boolean, default: false },
-      pushNotifications: { type: Boolean, default: true },
-    },
-    twoFactorAuth: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

@@ -1,16 +1,39 @@
-// MedicalDashboardSidebar.jsx
 "use client";
 import { useState } from "react";
-import PropTypes from "prop-types"; // Import PropTypes
 import {
   FaUserFriends,
   FaFileAlt,
   FaUser,
   FaHome,
-  FaChevronDown,
-  FaChevronUp,
   FaComments,
 } from "react-icons/fa";
+
+{
+  /* Custom SVG components for the dropdown toggle */
+}
+const OpenIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="inline"
+  >
+    <path d="M8 4l8 8-8 8" />
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="inline"
+  >
+    <path d="M16 4l-8 8 8 8" />
+  </svg>
+);
 
 interface MedicalProfessional {
   fullName?: string;
@@ -51,7 +74,7 @@ const MedicalDashboardSidebar = ({
             >
               Dashboard
               <FaHome className="text-gray-700 text-xl" />
-            </a> 
+            </a>
           </li>
           <li>
             <a
@@ -69,13 +92,7 @@ const MedicalDashboardSidebar = ({
               className="flex justify-between items-center py-2 px-4 text-base text-black hover:bg-blue-200 rounded-lg"
             >
               Staff
-              <span>
-                {isDropdownOpen ? (
-                  <FaChevronUp className="text-gray-700 text-xl" />
-                ) : (
-                  <FaChevronDown className="text-gray-700 text-xl" />
-                )}
-              </span>
+              <span>{isDropdownOpen ? <CloseIcon /> : <OpenIcon />}</span>
             </a>
             {isDropdownOpen && (
               <ul className="ml-6 mt-2 space-y-2 bg-blue-200 rounded-lg">

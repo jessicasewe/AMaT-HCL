@@ -1,23 +1,47 @@
-// AddReportModal.js
 "use client";
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 
-const AddReportModal = ({ isOpen, onClose, onSubmit }) => {
-  const [reportDetails, setReportDetails] = useState({
+interface ReportDetailsType {
+  id: string;
+  patientName: string;
+  date: string;
+  reportType: string;
+  status: string;
+  details: string;
+}
+
+interface AddReportModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (reportData: Omit<ReportDetailsType, "id">) => Promise<void>;
+}
+
+const AddReportModal: React.FC<AddReportModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+}) => {
+  const [reportDetails, setReportDetails] = useState<
+    Omit<ReportDetailsType, "id">
+  >({
     patientName: "",
     date: "",
     reportType: "",
     status: "",
-    notes: "",
+    details: "",
   });
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
     setReportDetails({ ...reportDetails, [name]: value });
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await onSubmit(reportDetails);
     onClose();
@@ -27,14 +51,13 @@ const AddReportModal = ({ isOpen, onClose, onSubmit }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded-lg shadow-md w-96">
-        <h2 className="text-xl font-semibold mb-4">Upload New Lab Report</h2>
-        <button className="absolute top-2 right-2" onClick={onClose}>
-          <FaTimes className="text-gray-600" />
-        </button>
+      <div className="bg-white p-6 rounded-lg shadow-md w-96 md:w-[30rem] lg:w-[36rem] relative">
+        <h2 className="text-xl font-semibold mb-4 text-black">
+          Upload New Lab Report
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-semibold text-black">
               Patient Name
             </label>
             <input
@@ -42,12 +65,13 @@ const AddReportModal = ({ isOpen, onClose, onSubmit }) => {
               name="patientName"
               value={reportDetails.patientName}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              placeholder="Enter patient name"
+              className="mt-1 block w-full border border-gray-300 text-black rounded-md p-2 hover:border-blue-500 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm text-black font-semibold">
               Date
             </label>
             <input
@@ -55,12 +79,13 @@ const AddReportModal = ({ isOpen, onClose, onSubmit }) => {
               name="date"
               value={reportDetails.date}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              placeholder="Select date"
+              className="mt-1 block w-full border border-gray-300 text-black rounded-md p-2 hover:border-blue-500 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-semibold text-black">
               Report Type
             </label>
             <input
@@ -68,19 +93,20 @@ const AddReportModal = ({ isOpen, onClose, onSubmit }) => {
               name="reportType"
               value={reportDetails.reportType}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              placeholder="Enter report type (e.g., X-ray, Blood Test)"
+              className="mt-1 block w-full border border-gray-300 text-black rounded-md p-2 hover:border-blue-500 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-semibold text-black">
               Status
             </label>
             <select
               name="status"
               value={reportDetails.status}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              className="mt-1 block w-full border border-gray-300 text-black rounded-md p-2 hover:border-blue-500 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all"
               required
             >
               <option value="" disabled>
@@ -91,14 +117,15 @@ const AddReportModal = ({ isOpen, onClose, onSubmit }) => {
             </select>
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-semibold text-black">
               Notes
             </label>
             <textarea
-              name="notes"
-              value={reportDetails.notes}
+              name="details"
+              value={reportDetails.details}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              placeholder="Add any additional notes here"
+              className="mt-1 block w-full border border-gray-300 text-black rounded-md p-2 hover:border-blue-500 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all"
               rows={3}
             />
           </div>
@@ -109,6 +136,10 @@ const AddReportModal = ({ isOpen, onClose, onSubmit }) => {
             Upload Report
           </button>
         </form>
+        <button className="flex justify-center w-full mt-8" onClick={onClose}>
+          <FaTimes className="text-gray-600" />
+          <span className="ml-2 text-sm text-black font-semibold">Close</span>
+        </button>
       </div>
     </div>
   );

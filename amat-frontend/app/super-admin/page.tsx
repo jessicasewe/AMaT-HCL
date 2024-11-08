@@ -124,11 +124,10 @@ export default function SuperAdminDashboard() {
           </ul>
         </div>
       </div>
-
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         <div className="bg-white shadow-md">
-          <DashboardNavbar toggleMenu={toggleDropdown} />
+          <DashboardNavbar />
         </div>
         <div className="p-6">
           {/* Top Analytics Summary */}

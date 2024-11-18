@@ -8,7 +8,6 @@ import {
   FaComments,
 } from "react-icons/fa";
 
-// Custom SVG components for the dropdown toggle
 const OpenIcon = () => (
   <svg
     width="20"
@@ -74,9 +73,8 @@ const MedicalDashboardSidebar = ({
         )}
       </button>
 
-      {/* Sidebar Drawer for Mobile */}
       <div
-        className={`fixed top-0 left-0 h-full w-60 bg-gray-200 shadow-md transition-transform transform ${
+        className={`fixed top-0 left-0 h-full min-h-screen w-60 bg-gray-200 shadow-md transition-transform transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0 sm:static sm:flex-shrink-0`}
       >
@@ -104,7 +102,7 @@ const MedicalDashboardSidebar = ({
             </li>
             <li>
               <a
-                href="/dashboard"
+                href="/dashboard/patient"
                 className="flex justify-between items-center py-2 px-4 text-base text-black hover:bg-blue-200 rounded-lg"
               >
                 Patients

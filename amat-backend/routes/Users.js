@@ -25,15 +25,17 @@ router.post("/signup", async (req, res) => {
     // Check if user already exists
     let user = await User.findOne({ email });
     if (user) {
-      return res.status(400).json({ error: "User already exists" });
+      return res.status(400).json({
+        error: "A user with this email already exists",
+      });
     }
 
-    //check if user with the same name exists
+    // Check if user with the same name exists
     user = await User.findOne({ name });
     if (user) {
       return res
         .status(400)
-        .json({ error: "User with the same name already exists" });
+        .json({ error: "A user with the same name already exists" });
     }
 
     // Hash the password

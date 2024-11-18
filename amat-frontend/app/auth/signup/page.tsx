@@ -1,6 +1,8 @@
 "use client";
 import axios from "axios";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Signup() {
   const [currentSection, setCurrentSection] = useState(1);
@@ -58,7 +60,11 @@ export default function Signup() {
         }, 3000);
       }
     } catch (error) {
-      console.error("Error creating account: ", error);
+      if ((error as any).response && (error as any).response.status === 400) {
+        toast.error("A user with this email already exists");
+      } else {
+        console.error("Error creating account: ", error);
+      }
     } finally {
       setLoading(false);
     }
@@ -394,6 +400,8 @@ export default function Signup() {
           <div className="loader"></div>
         </div>
       )}
+
+      <ToastContainer />
     </div>
   );
 }

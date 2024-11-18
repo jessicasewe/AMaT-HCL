@@ -28,6 +28,14 @@ router.post("/signup", async (req, res) => {
       return res.status(400).json({ error: "User already exists" });
     }
 
+    //check if user with the same name exists
+    user = await User.findOne({ name });
+    if (user) {
+      return res
+        .status(400)
+        .json({ error: "User with the same name already exists" });
+    }
+
     // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -78,13 +86,12 @@ router.post("/login", async (req, res) => {
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid password" });
     }
 
     const token = jwt.sign(
-      { id: user._id, name: user.name },
+      { id: user._id, name: user.name, lastActivity: Date.now() },
       process.env.JWT_SECRET,
       {
         expiresIn: 86400, // 24 hours

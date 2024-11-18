@@ -11,26 +11,37 @@ router.post("/medical/signup", async (req, res) => {
     const { name, email, phonenumber, role, specializations, password } =
       req.body;
 
-    // Check if role is either "doctor" or "nurse"
+    // Check if role is valid
     if (!["doctor", "nurse", "hospital Admin"].includes(role)) {
       return res.status(400).json({
-        error: "Role must be either 'doctor' or 'nurse' or 'hospital Admin'",
+        error: "Role must be either 'doctor', 'nurse', or 'hospital Admin'",
       });
     }
 
-    // Check if medical practitioner already exists
-    let medical_practitioner = await Medical_Practitioner.findOne({ email });
-    if (medical_practitioner) {
-      return res
-        .status(400)
-        .json({ error: "Medical Practitioner already exists" });
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: "Invalid email format" });
+    }
+
+    // Check if email already exists
+    let existingEmail = await Medical_Practitioner.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({ error: "Email is already in use" });
+    }
+
+    // Check if name already exists
+    let existingName = await Medical_Practitioner.findOne({ name });
+    if (existingName) {
+      return res.status(400).json({ error: "Name is already in use" });
     }
 
     // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    medical_practitioner = new Medical_Practitioner({
+    // Create new Medical Practitioner
+    const medical_practitioner = new Medical_Practitioner({
       name,
       email,
       phonenumber,
@@ -93,7 +104,7 @@ router.post("/medical/login", async (req, res) => {
   }
 });
 
-// Get all Medical Practitioners(doctors)
+// Get all Medical Practitioners (doctors)
 router.get("/medical/doctors", async (req, res) => {
   try {
     const doctors = await Medical_Practitioner.find({ role: "doctor" });
@@ -104,7 +115,7 @@ router.get("/medical/doctors", async (req, res) => {
   }
 });
 
-// Get all Medical Practitioners(nurses)
+// Get all Medical Practitioners (nurses)
 router.get("/medical/nurses", async (req, res) => {
   try {
     const nurses = await Medical_Practitioner.find({ role: "nurse" });

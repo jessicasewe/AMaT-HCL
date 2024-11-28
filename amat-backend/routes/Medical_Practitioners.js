@@ -3,18 +3,25 @@ const router = express.Router();
 const Medical_Practitioner = require("../models/Medical_Practitioner");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const verifyToken = require("../middleware/verifyToken");
+const verifyMedicalToken = require("../middleware/verifyMedicalToken");
 
 // Medical Practitioner Signup
 router.post("/medical/signup", async (req, res) => {
   try {
-    const { name, email, phonenumber, role, specializations, password } =
-      req.body;
+    const {
+      name,
+      email,
+      phonenumber,
+      role,
+      specializations,
+      licenseCertificate,
+      password,
+    } = req.body;
 
     // Check if role is valid
-    if (!["doctor", "nurse", "hospital Admin"].includes(role)) {
+    if (!["doctor", "nurse"].includes(role)) {
       return res.status(400).json({
-        error: "Role must be either 'doctor', 'nurse', or 'hospital Admin'",
+        error: "Role must be either 'doctor' or 'nurse'",
       });
     }
 
@@ -24,16 +31,29 @@ router.post("/medical/signup", async (req, res) => {
       return res.status(400).json({ error: "Invalid email format" });
     }
 
-    // Check if email already exists
-    let existingEmail = await Medical_Practitioner.findOne({ email });
-    if (existingEmail) {
-      return res.status(400).json({ error: "Email is already in use" });
+    // Check if email or phonenumber already exists
+    const existingEmail = await Medical_Practitioner.findOne({ email });
+    const existingPhonenumber = await Medical_Practitioner.findOne({
+      phonenumber,
+    });
+    if (existingEmail || existingPhonenumber) {
+      return res
+        .status(400)
+        .json({ error: "Email or phone number already in use" });
     }
 
-    // Check if name already exists
-    let existingName = await Medical_Practitioner.findOne({ name });
-    if (existingName) {
-      return res.status(400).json({ error: "Name is already in use" });
+    // Check if name combines with either email or phone number
+    const existingEntry = await Medical_Practitioner.findOne({
+      $or: [
+        { name, email },
+        { name, phonenumber },
+      ],
+    });
+
+    if (existingEntry) {
+      return res.status(400).json({
+        error: "Name is already in use",
+      });
     }
 
     // Hash the password
@@ -47,6 +67,7 @@ router.post("/medical/signup", async (req, res) => {
       phonenumber,
       role,
       specializations,
+      licenseCertificate,
       password: hashedPassword,
     });
 
@@ -54,16 +75,18 @@ router.post("/medical/signup", async (req, res) => {
 
     // Generate token
     const token = jwt.sign(
-      { id: medical_practitioner._id, name: medical_practitioner.name },
-      process.env.JWT_SECRET,
       {
-        expiresIn: 86400,
-      }
+        id: medical_practitioner._id,
+        name: medical_practitioner.name,
+        role: medical_practitioner.role,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: 86400 } // Token expiration set to 24 hours
     );
 
     res.status(201).json({ medical_practitioner, token });
   } catch (err) {
-    console.error("Error in Medical_Practitioner signup", err);
+    console.error("Error during signup", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -90,22 +113,24 @@ router.post("/medical/login", async (req, res) => {
 
     // Generate token
     const token = jwt.sign(
-      { id: medical_practitioner._id, name: medical_practitioner.name },
-      process.env.JWT_SECRET,
       {
-        expiresIn: 86400, // 24 hours
-      }
+        id: medical_practitioner._id,
+        name: medical_practitioner.name,
+        role: medical_practitioner.role,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: 86400 } // Token expiration set to 24 hours
     );
 
     res.status(200).json({ medical_practitioner, token });
   } catch (err) {
-    console.error("Error logging in medical practitioner", err);
+    console.error("Error during login", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
 // Get all Medical Practitioners (doctors)
-router.get("/medical/doctors", async (req, res) => {
+router.get("/medical/doctors", verifyMedicalToken, async (req, res) => {
   try {
     const doctors = await Medical_Practitioner.find({ role: "doctor" });
     res.status(200).json(doctors);
@@ -116,7 +141,7 @@ router.get("/medical/doctors", async (req, res) => {
 });
 
 // Get all Medical Practitioners (nurses)
-router.get("/medical/nurses", async (req, res) => {
+router.get("/medical/nurses", verifyMedicalToken, async (req, res) => {
   try {
     const nurses = await Medical_Practitioner.find({ role: "nurse" });
     res.status(200).json(nurses);
